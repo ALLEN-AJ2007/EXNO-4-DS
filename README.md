@@ -24,6 +24,118 @@ The feature selection techniques used are:
 3.Embedded Method
 
 # CODING AND OUTPUT:
-       # INCLUDE YOUR CODING AND OUTPUT SCREENSHOTS HERE
+```
+import pandas as pd
+import seaborn as sns
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder,OrdinalEncoder
+from category_encoders import BinaryEncoder
+import statsmodels.api as sm
+import scipy.stats as stats
+from sklearn.preprocessing import QuantileTransformer
+data=pd.read_csv(r"C:\Users\acer\Downloads\data.csv")
+df=pd.DataFrame(data)
+df
+```
+<img width="570" height="368" alt="image" src="https://github.com/user-attachments/assets/4949304c-79d1-4ea1-8f3a-1c2696be022b" />
+
+
+```
+df.isnull()
+```
+<img width="485" height="358" alt="image" src="https://github.com/user-attachments/assets/4589f2c2-3ba3-4ea3-b48a-4a3acdb6d370" />
+
+
+```
+le=LabelEncoder()
+df3=pd.DataFrame()
+df3["City"]=df["City"]
+df3["City_encoded"]=le.fit_transform(df['City'])
+print(df3)
+```
+
+<img width="372" height="281" alt="image" src="https://github.com/user-attachments/assets/e719c2d9-c2d3-460e-8e42-afa84e16d707" />
+
+```
+df2=pd.DataFrame()
+df2['Ord_2']=df["Ord_2"]
+education=['High School','Diploma','Bachelors','Masters','PhD']
+enc=OrdinalEncoder(categories=[education])
+encoded=enc.fit_transform(df2[['Ord_2']])
+df2['Encoded']=encoded
+print(df2)
+```
+
+<img width="438" height="285" alt="image" src="https://github.com/user-attachments/assets/1b5eb4d5-7218-4285-b9ac-39a9ba14405d" />
+
+```
+df4=pd.DataFrame()
+df4['Ord_1']=df["Ord_1"]
+ohe=OneHotEncoder(sparse_output=False)
+enc=pd.DataFrame(ohe.fit_transform(df[["Ord_1"]]))
+df4=pd.concat([df4,enc],axis=1)
+df4
+```
+
+<img width="292" height="366" alt="image" src="https://github.com/user-attachments/assets/7acf9e65-2f2c-401e-9459-28f1b931d2ac" />
+
+```
+df5=pd.DataFrame()
+df5['City']=df['City']
+be=BinaryEncoder(cols=['City'])
+encoded=be.fit_transform(df['City'])
+df5=pd.concat([df5,encoded],axis=1)
+print(df5)
+```
+
+<img width="404" height="276" alt="image" src="https://github.com/user-attachments/assets/7fd221d0-326b-4e52-826c-439627fbcafa" />
+
+```
+df=pd.DataFrame(pd.read_csv(r"C:\Users\acer\Downloads\Data_to_Transform.csv"))
+df
+```
+
+<img width="905" height="439" alt="image" src="https://github.com/user-attachments/assets/d0c403f8-6c2e-44e4-90b9-9fca5429f5d2" />
+
+```
+df['Highly PositiveSkew']=1/df['Highly Positive Skew']
+sm.qqplot(df['Highly Positive Skew'],fit=True,line='45')
+plt.show()
+```
+
+<img width="565" height="432" alt="image" src="https://github.com/user-attachments/assets/2a31f3f2-a949-4cc5-911c-fabba402a0ae" />
+
+```
+df['Moderate PositiveSkew']=np.sqrt(df['Moderate Positive Skew'])
+sm.qqplot(df['Moderate Positive Skew'],fit=True,line='45')
+plt.show()
+
+```
+
+<img width="565" height="432" alt="image" src="https://github.com/user-attachments/assets/e99ab501-cdae-42a8-b6be-bd7cf1ae33d9" />
+
+```
+df['Highly Positive Skew']=np.log(df['Highly Positive Skew'])
+sm.qqplot(df['Highly Positive Skew'],fit=True,line='45')
+plt.show()
+
+```
+
+<img width="565" height="432" alt="image" src="https://github.com/user-attachments/assets/baa87bf5-8c63-43b7-a6a0-c398cdd73cc5" />
+
+```
+from sklearn.preprocessing import PowerTransformer
+transformer=PowerTransformer("yeo-johnson")
+df["Moderate Negative Skew"]=pd.DataFrame(transformer.fit_transform(df[['Moderate Negative Skew']]))
+sm.qqplot(df['Moderate Negative Skew'],line='45')
+plt.show()
+```
+
+<img width="565" height="432" alt="image" src="https://github.com/user-attachments/assets/475eefd4-682b-40a4-ad69-d6979f77fe9f" />
+
+
+
+
 # RESULT:
-       # INCLUDE YOUR RESULT HERE
+Thus Feature Encoding and Feature Transformation has been done successfully 
